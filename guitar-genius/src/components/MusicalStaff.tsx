@@ -115,7 +115,7 @@ const MusicalStaff: React.FC<MusicalStaffProps> = ({ note, pitch }) => {
         {/* Bass Clef Symbol - centered on its staff */}
         <text 
           x="55" 
-          y={height/2 + (6 * lineSpacing) + 20} 
+          y={height/2 + (6 * lineSpacing) + 10} 
           fontSize="50" 
           fontFamily="serif" 
           fill="#fff"
@@ -193,7 +193,7 @@ const MusicalStaff: React.FC<MusicalStaffProps> = ({ note, pitch }) => {
           </>
         )}
 
-        {/* Middle C ledger line */}
+        {/* Middle C ledger line with glow */}
         <line
           x1={width/2 - 20}
           y1={height/2 + (3 * lineSpacing)}
@@ -201,6 +201,7 @@ const MusicalStaff: React.FC<MusicalStaffProps> = ({ note, pitch }) => {
           y2={height/2 + (3 * lineSpacing)}
           stroke="#fff"
           strokeWidth="1.5"
+          filter="url(#staff-glow)"
         />
       </svg>
     </div>

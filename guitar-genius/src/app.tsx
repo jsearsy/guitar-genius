@@ -9,7 +9,8 @@ function App() {
   const [isListening, setIsListening] = useState(false)
   const [error, setError] = useState<string>('')
   const [debug, setDebug] = useState<string>('')
-  const [visitorCount, setVisitorCount] = useState(Math.floor(Math.random() * 100000))
+  const initialVisitorCount = 1234567890 + Math.floor(Math.random() * 1000000000);
+  const [visitorCount, setVisitorCount] = useState(initialVisitorCount)
   const audioContextRef = useRef<AudioContext | null>(null)
   const analyserRef = useRef<AnalyserNode | null>(null)
   const streamRef = useRef<MediaStream | null>(null)
@@ -19,12 +20,21 @@ function App() {
   const BUFFER_SIZE = 5
 
   useEffect(() => {
-    // Increment visitor count randomly
+    // Increment visitor count randomly, ensuring it stays above 1 billion
     const interval = setInterval(() => {
-      setVisitorCount(prev => prev + Math.floor(Math.random() * 10))
-    }, 30000)
-    return () => clearInterval(interval)
-  }, [])
+      setVisitorCount(prev => {
+        const increment = Math.floor(Math.random() * 100000) + 50000;
+        const newCount = prev + increment;
+        return newCount < 1234567890 ? initialVisitorCount : newCount;
+      });
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Format visitor count with commas
+  const formatVisitorCount = (count: number) => {
+    return count.toLocaleString('en-US');
+  };
 
   const noteFromPitch = (frequency: number) => {
     const noteStrings = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
@@ -201,7 +211,7 @@ function App() {
       </div>
 
       <div className="visitor-counter">
-        VISITORS: {visitorCount.toLocaleString()}
+        VISITORS: {formatVisitorCount(visitorCount)}
       </div>
       <div className="construction">
         {/* Construction GIF will be shown via CSS */}
