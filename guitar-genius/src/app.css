@@ -1,0 +1,325 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Metal+Mania&display=swap');
+
+@keyframes flames {
+  0% { text-shadow: 0 0 4px #ffd, 0 -5px 4px #ff3, 2px -10px 6px #fd3, -2px -15px 11px #f80, 2px -25px 18px #f20; }
+  25% { text-shadow: 0 0 4px #ffd, 2px -7px 4px #ff3, -2px -12px 6px #fd3, 2px -18px 11px #f80, -2px -27px 18px #f20; }
+  50% { text-shadow: 0 0 4px #ffd, -2px -6px 4px #ff3, 2px -11px 6px #fd3, -2px -17px 11px #f80, 2px -26px 18px #f20; }
+  75% { text-shadow: 0 0 4px #ffd, 2px -8px 4px #ff3, -2px -13px 6px #fd3, 2px -19px 11px #f80, -2px -28px 18px #f20; }
+  100% { text-shadow: 0 0 4px #ffd, 0 -5px 4px #ff3, 2px -10px 6px #fd3, -2px -15px 11px #f80, 2px -25px 18px #f20; }
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.7; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+body {
+  margin: 0;
+  background-color: #000;
+  background-image: 
+    repeating-linear-gradient(45deg, #1a0000 0px, #1a0000 10px, #000 10px, #000 20px);
+  color: #ff0000;
+  font-family: 'Metal Mania', cursive;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: red;"><text y="20">🔥</text></svg>') 16 16, auto;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.container::before, .container::after {
+  content: '';
+  position: fixed;
+  width: 150px;
+  height: 100vh;
+  top: 0;
+  background-image: url('https://gifcity.carrd.co/assets/images/gallery25/c8e011e3.gif?v=d248915d');
+  background-repeat: repeat-y;
+  pointer-events: none;
+}
+
+.container::before {
+  left: 0;
+}
+
+.container::after {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+.title {
+  font-family: 'Creepster', cursive;
+  font-size: 4rem;
+  margin: 2rem 0;
+  color: #ff0000;
+  text-transform: uppercase;
+  animation: flames 3s infinite;
+  text-align: center;
+  letter-spacing: 4px;
+  -webkit-text-stroke: 1px #ff6600;
+  position: relative;
+}
+
+.title::before {
+  content: '⛧';
+  position: absolute;
+  font-size: 6rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255, 0, 0, 0.2);
+  animation: spin 10s linear infinite;
+  z-index: -1;
+}
+
+.marquee {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #330000;
+  color: #ff0000;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 5px 0;
+}
+
+.marquee-content {
+  display: inline-block;
+  animation: marquee 20s linear infinite;
+}
+
+.content {
+  background: rgba(20, 0, 0, 0.9);
+  border: 3px solid #ff0000;
+  border-radius: 10px;
+  padding: 2rem;
+  margin: 2rem;
+  box-shadow: 0 0 20px #ff0000, inset 0 0 20px #ff0000;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+  background-image: url('https://gifcity.carrd.co/assets/images/gallery25/c8e011e3.gif?v=d248915d');
+  background-blend-mode: overlay;
+}
+
+.content::before, .content::after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-image: url('https://gifcity.carrd.co/assets/images/gallery25/7c5a4da8.gif?v=d248915d');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.content::before {
+  top: -50px;
+  left: -50px;
+}
+
+.content::after {
+  top: -50px;
+  right: -50px;
+  transform: scaleX(-1);
+}
+
+.pitch, .note {
+  font-family: 'Metal Mania', cursive;
+  text-align: center;
+  margin: 1rem 0;
+  text-shadow: 0 0 10px #ff0000;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.pitch {
+  color: #ff6600;
+  font-size: 2rem;
+}
+
+.note {
+  color: #ff0000;
+  font-size: 3.5rem;
+  animation: flames 2s infinite;
+  position: relative;
+}
+
+.note::before, .note::after {
+  content: '🔥';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+}
+
+.note::before {
+  left: -40px;
+}
+
+.note::after {
+  right: -40px;
+}
+
+.start-button, .stop-button {
+  font-family: 'Metal Mania', cursive;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  border: 2px solid #ff0000;
+  background: linear-gradient(45deg, #660000, #330000);
+  color: #ff0000;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  margin: 1rem 0;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.start-button::after, .stop-button::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background-image: url('https://gifcity.carrd.co/assets/images/gallery25/7c5a4da8.gif?v=d248915d');
+  background-size: contain;
+  background-repeat: repeat-x;
+  z-index: -1;
+}
+
+.status {
+  color: #ff3300;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 1rem;
+  text-shadow: 0 0 5px #ff0000;
+  animation: blink 1s infinite;
+}
+
+.error {
+  color: #ff0000;
+  background: rgba(50, 0, 0, 0.8);
+  padding: 1rem;
+  border: 1px solid #ff0000;
+  border-radius: 5px;
+  margin: 1rem 0;
+  text-align: center;
+  animation: blink 0.5s infinite;
+  background-image: url('https://gifcity.carrd.co/assets/images/gallery25/7c5a4da8.gif?v=d248915d');
+  background-blend-mode: overlay;
+}
+
+.construction {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 100px;
+  height: 100px;
+  background-image: url('https://gifcity.carrd.co/assets/images/gallery25/7c5a4da8.gif?v=d248915d');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 1000;
+}
+
+.visitor-counter {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #000;
+  border: 2px solid #ff0000;
+  padding: 10px;
+  font-family: "Courier New", monospace;
+  color: #ff0000;
+  text-shadow: 0 0 5px #ff0000;
+  animation: blink 2s infinite;
+}
+
+.skull-decoration {
+  position: fixed;
+  font-size: 40px;
+  animation: float 3s ease-in-out infinite;
+  z-index: 1000;
+}
+
+.skull-1 { top: 20px; left: 20px; }
+.skull-2 { top: 20px; right: 20px; }
+
+.debug {
+  font-family: "Courier New", monospace;
+  color: #00ff00;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border: 1px solid #00ff00;
+  text-align: left;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
