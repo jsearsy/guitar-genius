@@ -8,7 +8,7 @@ interface MusicalStaffProps {
 const MusicalStaff: React.FC<MusicalStaffProps> = ({ note, pitch }) => {
   // Staff dimensions using golden ratio (φ ≈ 1.618)
   const width = 500;
-  const height = 360;
+  const height = 300;
   const lineSpacing = 15;
   const goldenRatio = 1.618;
   const verticalPadding = height / (2 * goldenRatio); // Top padding using golden ratio
@@ -115,7 +115,7 @@ const MusicalStaff: React.FC<MusicalStaffProps> = ({ note, pitch }) => {
         {/* Bass Clef Symbol - centered on its staff */}
         <text 
           x="55" 
-          y={height/2 + (6 * lineSpacing) + 10} 
+          y={height/2 + (6 * lineSpacing) + 12} 
           fontSize="50" 
           fontFamily="serif" 
           fill="#fff"

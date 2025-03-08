@@ -8,7 +8,6 @@ function App() {
   const [note, setNote] = useState<string>('')
   const [isListening, setIsListening] = useState(false)
   const [error, setError] = useState<string>('')
-  const [debug, setDebug] = useState<string>('')
   const initialVisitorCount = 1234567890 + Math.floor(Math.random() * 1000000000);
   const [visitorCount, setVisitorCount] = useState(initialVisitorCount)
   const audioContextRef = useRef<AudioContext | null>(null)
@@ -66,7 +65,6 @@ function App() {
     setPitch(null)
     setNote('')
     setError('')
-    setDebug('Cleaned up audio pipeline')
   }
 
   const getSmoothedPitch = (newPitch: number) => {
@@ -82,7 +80,6 @@ function App() {
     try {
       cleanup()
       setError('')
-      setDebug('Starting...')
 
       // Check if the browser supports getUserMedia
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -91,7 +88,6 @@ function App() {
 
       // First check if we have permission
       const permissionStatus = await navigator.permissions.query({ name: 'microphone' as PermissionName })
-      setDebug(`Microphone permission status: ${permissionStatus.state}`)
       
       console.log('Requesting microphone access...')
       const stream = await navigator.mediaDevices.getUserMedia({ 
@@ -104,8 +100,6 @@ function App() {
         console.error('getUserMedia error:', err.name, err.message)
         throw new Error(`Microphone access failed: ${err.message}`)
       })
-
-      setDebug('Mic access granted')
       
       streamRef.current = stream
       const audioContext = new AudioContext()
@@ -113,9 +107,7 @@ function App() {
       
       // Check if audio context is running
       if (audioContext.state !== 'running') {
-        setDebug(`Audio context state: ${audioContext.state}. Attempting to resume...`)
         await audioContext.resume()
-        setDebug(`Audio context resumed. New state: ${audioContext.state}`)
       }
       
       const source = audioContext.createMediaStreamSource(stream)
@@ -133,23 +125,14 @@ function App() {
       source.connect(analyser)
       isListeningRef.current = true
       setIsListening(true)
-      setDebug('Audio pipeline ready')
 
-      let frameCount = 0
       const detectPitch = () => {
         if (!analyserRef.current || !isListeningRef.current) {
-          setDebug('Stopping detection loop - ' + 
-            (!analyserRef.current ? 'No analyzer' : 'Not listening'))
           return
         }
         
         analyserRef.current.getFloatTimeDomainData(input)
         const [pitchVal, clarity] = detector.findPitch(input, audioContext.sampleRate)
-
-        frameCount++
-        if (frameCount % 10 === 0) {
-          setDebug(`Frame: ${frameCount}, Raw Pitch: ${pitchVal?.toFixed(1)} Hz, Clarity: ${clarity?.toFixed(2)}, Context: ${audioContext.state}`)
-        }
         
         if (clarity > 0.3 && pitchVal > 50 && pitchVal < 1500) {
           const smoothedPitch = getSmoothedPitch(pitchVal)
@@ -164,7 +147,6 @@ function App() {
     } catch (error) {
       console.error('Error accessing microphone:', error)
       setError('Error accessing microphone. Please ensure you have granted microphone permissions.')
-      setDebug('Error: ' + (error as Error).message)
       cleanup()
     }
   }
@@ -182,20 +164,50 @@ function App() {
 
   return (
     <div className="container">
+      <div className="pentagram-pattern" />
       <div className="marquee">
         <div className="marquee-content">
-          🔥 WELCOME TO GUITAR GENIUS - THE MOST EXTREME PITCH DETECTION APP IN THE UNIVERSE! 🔥 
-          BEST VIEWED IN NETSCAPE NAVIGATOR 4.0 OR HIGHER! 🔥 WEBMASTER: LUCIFER@HELL.COM 🔥
+          🤘 WELCOME TO GUITAR GENIUS - TRVER THAN VARG'S CHURCH ARSON COLLECTION! 🤘 
+          ⚡️ NECRO AS EURONYMOUS' POLAROIDS ⚡️ 
+          💀 FROSTIER THAN IMMORTAL'S CHRISTMAS PHOTOS 💀 
+          🔥 MORE EVIL THAN GAAHL'S WINE CELLAR 🔥 
+          ⛧ DARKER THAN DARKTHRONE'S FIRST REHEARSAL DEMO (1988) ⛧ 
+          🎸 FEATURING BLAST BEATS FASTER THAN HELLHAMMER ON CAFFEINE 🎸 
+          ⚔️ MORE SPIKES THAN GORGOROTH'S ENTIRE WARDROBE ⚔️ 
+          🦇 KVLTER THAN A MAYHEM ALBUM RECORDED ON A POTATO 🦇 
+          ⛧ AS GRIM AS ABBATH'S MAKEUP TUTORIAL ⛧ 
+          🤘 PRODUCED IN A NORWEGIAN FOREST ON A 4-TRACK CASSETTE 🤘 
+          💀 COMES WITH FREE DEAD'S FUNERAL PAMPHLET 💀 
+          🔥 MORE CORPSEPAINT THAN A DIMMU BORGIR FAMILY REUNION 🔥 
+          ⚡️ RECORDED IN ONE TAKE LIKE FILOSOFEM ⚡️ 
+          🦇 FEATURING IHSAHN'S KEYBOARD PRESETS FROM 1994 🦇 
+          ⛧ TRVE KVLT WEB 1.0 DESIGN BY FENRIZ ⛧ 
+          🎸 USES MORE TREMOLO PICKING THAN ENTIRE SWEDISH SCENE 🎸 
+          💀 APPROVED BY DEAD'S PET CROW 💀 
+          🔥 MORE LEATHER AND SPIKES THAN A MARDUK COSPLAY CONTEST 🔥 
+          ⚡️ COLDER THAN IMMORTAL'S MUSIC VIDEO SHOOT 🌨️ 
+          🦇 GUEST APPEARANCE BY NOCTURNO CULTO'S CAT 🦇 
+          ⛧ MIXED IN A CAVE BY CANDLELIGHT ⛧ 
+          🎸 MASTERED ON EURONYMOUS' ORIGINAL 4-TRACK 🎸 
+          �� COMES WITH AUTHENTIC NORWEGIAN FOREST DIRT 💀 
+          🔥 MORE SATAN THAN DEATHCRUSH ON 8-TRACK 🔥
+          ⚡️ FEATURING REAL MEDIEVAL TORTURE INSTRUMENTS AS PERCUSSION ⚡️
         </div>
       </div>
       
       <div className="skull-decoration skull-1">💀</div>
       <div className="skull-decoration skull-2">💀</div>
+      <div className="skull-decoration skull-3">💀</div>
+      <div className="skull-decoration skull-4">💀</div>
+      <div className="skull-decoration skull-5">💀</div>
+      <div className="skull-decoration skull-6">💀</div>
+      <div className="skull-decoration skull-7">💀</div>
+      <div className="skull-decoration skull-8">💀</div>
+      <div className="skull-decoration skull-9">💀</div>
 
       <h1 className="title">Guitar Genius</h1>
       <div className="content">
         {error && <div className="error">{error}</div>}
-        <div className="debug">{debug}</div>
         {pitch && <h2 className="pitch">Frequency: {pitch.toFixed(1)} Hz</h2>}
         {note && <h2 className="note">Note: {note}</h2>}
         <MusicalStaff note={note} pitch={pitch} />
@@ -208,6 +220,7 @@ function App() {
         <div className="status">
           {isListening ? '🔥 DETECTING YOUR SICK RIFFS 🔥' : '🎸 READY TO SHRED 🎸'}
         </div>
+        <div className="content-pentagrams" />
       </div>
 
       <div className="visitor-counter">
