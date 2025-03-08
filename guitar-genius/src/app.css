@@ -154,16 +154,14 @@ body {
 }
 
 .content {
-  background: rgba(20, 0, 0, 0.9);
-  border: 3px solid #ff0000;
-  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.8);
   padding: 2rem;
-  margin: 2rem;
-  box-shadow: 0 0 20px #ff0000, inset 0 0 20px #ff0000;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+  max-width: 800px;
+  margin: 0 auto;
   position: relative;
-  animation: float 3s ease-in-out infinite;
-  background-image: url('https://gifcity.carrd.co/assets/images/gallery25/c8e011e3.gif?v=d248915d');
-  background-blend-mode: overlay;
+  z-index: 1;
 }
 
 .content::before, .content::after {
@@ -322,4 +320,21 @@ body {
   font-size: 0.9rem;
   white-space: pre-wrap;
   word-break: break-all;
+}
+
+/* Musical Staff Styles */
+.musical-staff {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  box-shadow: 0 0 10px rgba(255, 51, 102, 0.2);
+}
+
+.musical-staff svg {
+  filter: drop-shadow(0 0 2px rgba(255, 51, 102, 0.3));
+}
+
+.musical-staff text {
+  font-family: 'Metal Mania', cursive;
 }

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { PitchDetector } from 'pitchy'
 import './App.css'
+import MusicalStaff from './components/MusicalStaff'
 
 function App() {
   const [pitch, setPitch] = useState<number | null>(null)
@@ -187,6 +188,7 @@ function App() {
         <div className="debug">{debug}</div>
         {pitch && <h2 className="pitch">Frequency: {pitch.toFixed(1)} Hz</h2>}
         {note && <h2 className="note">Note: {note}</h2>}
+        <MusicalStaff note={note} pitch={pitch} />
         <button
           className={isListening ? 'stop-button' : 'start-button'}
           onClick={isListening ? stopListening : startListening}
