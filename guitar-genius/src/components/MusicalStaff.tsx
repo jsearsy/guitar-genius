@@ -6,10 +6,12 @@ interface MusicalStaffProps {
 }
 
 const MusicalStaff: React.FC<MusicalStaffProps> = ({ note, pitch }) => {
-  // Staff dimensions
-  const width = 300;
-  const height = 300;
-  const lineSpacing = 10; // Standard spacing between staff lines
+  // Staff dimensions using golden ratio (φ ≈ 1.618)
+  const width = 500;
+  const height = 360;
+  const lineSpacing = 15;
+  const goldenRatio = 1.618;
+  const verticalPadding = height / (2 * goldenRatio); // Top padding using golden ratio
   
   // Note positions based on traditional staff lines and spaces
   const notePositions: { [key: string]: number } = {
@@ -36,7 +38,12 @@ const MusicalStaff: React.FC<MusicalStaffProps> = ({ note, pitch }) => {
     'D5': -2,  // Fourth line
     'E5': -3,  // Fourth space
     'F5': -4,  // Fifth line
-    'G5': -5   // Space above treble staff
+    'G5': -5,  // First space above treble staff
+    'A5': -6,  // First ledger line above treble
+    'B5': -7,  // Space above first ledger line
+    'C6': -8,  // Second ledger line above treble
+    'D6': -9,  // Space above second ledger line
+    'E6': -10  // Third ledger line above treble
   };
 
   const getAccidental = (note: string): string => {
@@ -56,6 +63,13 @@ const MusicalStaff: React.FC<MusicalStaffProps> = ({ note, pitch }) => {
     return centerY + pos * (lineSpacing/2);
   };
 
+  // Function to determine if a note needs a ledger line
+  const needsLedgerLine = (note: string): boolean => {
+    const baseNote = note.replace('#', '').replace('b', '');
+    // Middle C and notes above treble staff
+    return ['C4', 'A5', 'C6', 'E6'].includes(baseNote);
+  };
+
   return (
     <div style={{ margin: '20px 0' }}>
       <svg width={width} height={height} style={{ display: 'block', margin: '0 auto' }}>
@@ -66,12 +80,12 @@ const MusicalStaff: React.FC<MusicalStaffProps> = ({ note, pitch }) => {
         {[0, 1, 2, 3, 4].map((i) => (
           <line
             key={`treble-${i}`}
-            x1="30"
+            x1="50"
             y1={height/2 - (2 * lineSpacing) + (i * lineSpacing)}
-            x2={width - 30}
+            x2={width - 50}
             y2={height/2 - (2 * lineSpacing) + (i * lineSpacing)}
             stroke="#fff"
-            strokeWidth="1"
+            strokeWidth="1.5"
           />
         ))}
 
@@ -79,36 +93,99 @@ const MusicalStaff: React.FC<MusicalStaffProps> = ({ note, pitch }) => {
         {[0, 1, 2, 3, 4].map((i) => (
           <line
             key={`bass-${i}`}
-            x1="30"
+            x1="50"
             y1={height/2 + (4 * lineSpacing) + (i * lineSpacing)}
-            x2={width - 30}
+            x2={width - 50}
             y2={height/2 + (4 * lineSpacing) + (i * lineSpacing)}
             stroke="#fff"
-            strokeWidth="1"
+            strokeWidth="1.5"
           />
         ))}
 
-        {/* Treble Clef Symbol */}
-        <text x="35" y={height/2 - (2 * lineSpacing)} fontSize="35" fontFamily="serif" fill="#fff">𝄞</text>
+        {/* Treble Clef Symbol - centered on its staff */}
+        <text 
+          x="55" 
+          y={height/2} 
+          fontSize="50" 
+          fontFamily="serif" 
+          fill="#fff"
+          dominantBaseline="middle"
+        >𝄞</text>
 
-        {/* Bass Clef Symbol */}
-        <text x="35" y={height/2 + (6 * lineSpacing)} fontSize="35" fontFamily="serif" fill="#fff">𝄢</text>
+        {/* Bass Clef Symbol - centered on its staff */}
+        <text 
+          x="55" 
+          y={height/2 + (6 * lineSpacing) + 20} 
+          fontSize="50" 
+          fontFamily="serif" 
+          fill="#fff"
+          dominantBaseline="middle"
+        >𝄢</text>
 
-        {/* Current Note */}
+        {/* Current Note and its Ledger Lines */}
         {note && (
           <>
+            {/* Ledger lines */}
+            {needsLedgerLine(note) && (
+              <>
+                {/* Middle C ledger line */}
+                {note === 'C4' && (
+                  <line
+                    x1={width/2 - 20}
+                    y1={height/2 + (3 * lineSpacing)}
+                    x2={width/2 + 20}
+                    y2={height/2 + (3 * lineSpacing)}
+                    stroke="#fff"
+                    strokeWidth="1.5"
+                  />
+                )}
+                {/* High A ledger line */}
+                {note === 'A5' && (
+                  <line
+                    x1={width/2 - 20}
+                    y1={height/2 - (5 * lineSpacing)}
+                    x2={width/2 + 20}
+                    y2={height/2 - (5 * lineSpacing)}
+                    stroke="#fff"
+                    strokeWidth="1.5"
+                  />
+                )}
+                {/* High C ledger line */}
+                {note === 'C6' && (
+                  <line
+                    x1={width/2 - 20}
+                    y1={height/2 - (6 * lineSpacing)}
+                    x2={width/2 + 20}
+                    y2={height/2 - (6 * lineSpacing)}
+                    stroke="#fff"
+                    strokeWidth="1.5"
+                  />
+                )}
+                {/* High E ledger line */}
+                {note === 'E6' && (
+                  <line
+                    x1={width/2 - 20}
+                    y1={height/2 - (7 * lineSpacing)}
+                    x2={width/2 + 20}
+                    y2={height/2 - (7 * lineSpacing)}
+                    stroke="#fff"
+                    strokeWidth="1.5"
+                  />
+                )}
+              </>
+            )}
             {/* Note head */}
             <circle
               cx={width/2}
               cy={getYPosition(note)}
-              r={lineSpacing/2}
+              r={lineSpacing/1.5}
               fill="#ff3366"
             />
             {/* Note name */}
             <text
-              x={width/2 + 30}
-              y={getYPosition(note) + 5}
-              fontSize="14"
+              x={width/2 + 40}
+              y={getYPosition(note) + 7}
+              fontSize="20"
               fill="#fff"
             >
               {note}
@@ -118,12 +195,12 @@ const MusicalStaff: React.FC<MusicalStaffProps> = ({ note, pitch }) => {
 
         {/* Middle C ledger line */}
         <line
-          x1={width/2 - 15}
+          x1={width/2 - 20}
           y1={height/2 + (3 * lineSpacing)}
-          x2={width/2 + 15}
+          x2={width/2 + 20}
           y2={height/2 + (3 * lineSpacing)}
           stroke="#fff"
-          strokeWidth="1"
+          strokeWidth="1.5"
         />
       </svg>
     </div>
